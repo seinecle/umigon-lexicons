@@ -248,7 +248,7 @@ doucheclown		12		3
 doucheclowns		12		3
 downbeat		12		1
 downhearted		12		1
-drained	!isInATextWithOneOfTheseSpecificTerms///water|pipe|flood	12:10		2
+drained	!isInASentenceLikeFragmentWithOneOfTheseSpecificTerms///water|pipe|flood	12:10		2
 dread		12	x	2
 dreaded		12		2
 dreading	!isImmediatelyPrecededByANegation	12:10		2
@@ -498,7 +498,7 @@ low	isPrecededByStrongWord	12	x	2
 ludicrous	!isImmediatelyPrecededByANegation	12:10		1
 mad	!isImmediatelyPrecededByANegation+++!isFollowedBySpecificTerm///max	if(A && B){12} else{10}		2
 maddening	+++!isFollowedByAPositiveOpinion	12:10		3
-made up	idiotsPrecededByStrongWord	12:10	3
+made up	isPrecededByStrongWord	12:10	3
 make sense	isImmediatelyPrecededByANegation	12:11	3
 mature	isImmediatelyPrecededByANegation	12:10	3
 mean spirited	!isImmediatelyPrecededByANegation	12:10	3
@@ -762,7 +762,7 @@ stifled		12		2
 stirred up		12
 stirring up		12
 stomachache	!isImmediatelyPrecededByANegation	12:10		2
-stop	isAllCaps+++isFirstTermOfText+++IsImmediatelyFollowedBySpecificTerm///what	if ((A || B) && C == 'false') {12} else if (C) {11} else {10}	x	3
+stop	isAllCaps+++isFirstTermOfText+++isImmediatelyFollowedBySpecificTerm///what	if ((A || B) && C == 'false') {12} else if (C) {11} else {10}	x	3
 strange		12		1
 stuck	!isImmediatelyPrecededByANegation	12:10		1
 stuffy	!isImmediatelyPrecededByANegation	12:10		1
@@ -794,7 +794,7 @@ terrible	!isImmediatelyPrecededByANegation	12:10		2
 terrifying		12		3
 terrifyingly		12		3
 that s it		12		1
-the only	isImmediatelyPrecededByANegation+++isInSegmentEndingInExclamation+++!isPrecededBySubjectiveTerm	if (A && B && C) {12} else {10}
+the only	isImmediatelyPrecededByANegation+++isInSegmentEndingWithExclamation+++!isPrecededBySubjectiveTerm	if (A && B && C) {12} else {10}
 thin	isImmediatelyFollowedBySpecificTerm///margin|air|layer|slice|ground|ice|floor|evidence+++!isImmediatelyPrecededBySpecificTerm///running|too|paper|stretched|stretch|little|patience|wafer	if (A || B) {12} else {10}	2	2
 this close		12		1
 thisclose		12		1

@@ -360,7 +360,7 @@ racing with ideas	!isImmediatelyPrecededByANegation	11:12	3
 rad	!isImmediatelyPrecededByANegation	11:12	3
 radiant	!isImmediatelyFollowedByNegativePriorAssociation	11:10
 recommend	!isImmediatelyPrecededByANegation+++!isImmediatelyFollowedBySpecificTerm///to|doing+++!isFollowedByANegativeOpinion+++!isFollowedBySpecificTerm///before	if (A && B && C && D) {11} else if (A == 'false') {12} else {10}	2
-refreshingly	!IsImmediatelyFollowedByANegativeOpinion	12:10
+refreshingly	!isImmediatelyFollowedByANegativeOpinion	12:10
 reliable	!isImmediatelyPrecededByANegation	11:12	2
 relief	!isImmediatelyPrecededByANegation	11:12	2
 remarkable	!isImmediatelyFollowedByNegativePriorAssociation+++!isImmediatelyPrecededByANegation+++!isImmediatelyFollowedByANegativeOpinion	if (A && B && C) {11} else {12}

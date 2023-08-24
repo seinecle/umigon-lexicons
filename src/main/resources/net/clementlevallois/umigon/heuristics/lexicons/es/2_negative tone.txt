@@ -230,7 +230,7 @@ payaso		12
 payasos		12
 pesimista		12
 desanimado		12
-agotado	!isInATextWithOneOfTheseSpecificTerms///agua|tudo|inundación	12
+agotado	!isInASentenceLikeFragmentWithOneOfTheseSpecificTerms///agua|tudo|inundación	12
 miedo		12
 temido		12
 temiendo	!isImmediatelyPrecededByANegation	12

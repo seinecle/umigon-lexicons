@@ -200,7 +200,7 @@ te patee el culo	!isImmediatelyPrecededByANegation	11:12
 amable	isImmediatelyFollowedBySpecificTerm///de su parte	11
  nombrado caballero	!isImmediatelyPrecededByANegation	11:12
 prestigio	!isImmediatelyPrecededByANegation	11:12
-risa	!isImmediatelyPrecededByANegationis+++!isImmediatelyFollowedBySpecificTerm///de	if (A && B) {11} else {12}
+risa	!isImmediatelyPrecededByANegation+++!isImmediatelyFollowedBySpecificTerm///de	if (A && B) {11} else {12}
 Se rió	!isImmediatelyPrecededByANegation	11:12
 risas	!isImmediatelyPrecededByANegation	11:12
 ventaja	!isImmediatelyPrecededByANegation	11:12
