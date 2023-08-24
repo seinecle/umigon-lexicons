@@ -476,7 +476,7 @@ laughable		12		3
 layoff	!isImmediatelyPrecededByANegation	12:10		1
 layoffs	!isImmediatelyPrecededByANegation	12:10		1
 laziest	!isImmediatelyPrecededByANegation	12:10		1
-lazy	!isImmediatelyFollowedByATimeIndication	12:10	1
+lazy	!isImmediatelyFollowedByTimeIndication	12:10	1
 left wing		12		1
 let down		12		1
 liar		12		2

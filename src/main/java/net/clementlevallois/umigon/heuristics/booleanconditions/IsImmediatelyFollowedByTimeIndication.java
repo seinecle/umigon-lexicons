@@ -16,7 +16,7 @@ import net.clementlevallois.umigon.model.NGram;
  *
  * @author LEVALLOIS
  */
-public class IsImmediatelyFollowedByATimeIndication {
+public class IsImmediatelyFollowedByTimeIndication {
         public static BooleanCondition check(boolean stripped, List<NGram> textFragmentsThatAreNGrams, NGram ngram, LoaderOfLexiconsAndConditionalExpressions lexiconsAndTheirConditionalExpressions) {
         BooleanCondition booleanCondition = new BooleanCondition(isImmediatelyFollowedByTimeIndication);
 

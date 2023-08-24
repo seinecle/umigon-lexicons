@@ -350,7 +350,7 @@ prettiest	!isImmediatelyPrecededByANegation	11:12	3
 pretty	!isImmediatelyPrecededByANegation+++!isImmediatelyFollowedByANegativeOpinion	if (A && B) {11} else if (A) {12} else {10}	3
 prevent	!isImmediatelyPrecededByANegation	11:12	1
 prevents	!isImmediatelyPrecededByANegation	11:12	1
-professional	!isImmediatelyPrecededByANegation+++isPrecededByStrongWord if (A && B) {11} else if (A) {12} else {10}
+professional	!isImmediatelyPrecededByANegation+++isPrecededByStrongWord	if (A && B) {11} else if (A) {12} else {10}
 profitable	!isImmediatelyPrecededByANegation	11:12	2
 proud	!isImmediatelyPrecededByANegation	11:12	3
 pumped	!isImmediatelyPrecededByANegation	11:12	3
