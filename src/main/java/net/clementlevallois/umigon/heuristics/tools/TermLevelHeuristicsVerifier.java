@@ -5,8 +5,8 @@
  */
 package net.clementlevallois.umigon.heuristics.tools;
 
-import net.clementlevallois.umigon.model.BooleanCondition;
-import net.clementlevallois.umigon.model.TermWithConditionalExpressions;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
+import net.clementlevallois.umigon.model.classification.TermWithConditionalExpressions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +39,7 @@ import net.clementlevallois.umigon.heuristics.booleanconditions.IsPrecededBySubj
 import net.clementlevallois.umigon.model.Category;
 import net.clementlevallois.umigon.model.Category.CategoryEnum;
 import net.clementlevallois.umigon.model.NGram;
-import net.clementlevallois.umigon.model.ResultOneHeuristics;
+import net.clementlevallois.umigon.model.classification.ResultOneHeuristics;
 import net.clementlevallois.umigon.model.SentenceLike;
 import net.clementlevallois.umigon.model.TextFragment;
 

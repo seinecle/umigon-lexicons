@@ -5,8 +5,8 @@ package net.clementlevallois.umigon.heuristics.booleanconditions;
 
 import java.util.Set;
 import net.clementlevallois.umigon.heuristics.tools.LoaderOfLexiconsAndConditionalExpressions;
-import net.clementlevallois.umigon.model.BooleanCondition;
-import static net.clementlevallois.umigon.model.BooleanCondition.BooleanConditionEnum.isHashtag;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
+import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isHashtag;
 import net.clementlevallois.umigon.model.NGram;
 
 /**

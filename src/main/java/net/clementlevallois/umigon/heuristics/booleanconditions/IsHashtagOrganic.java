@@ -4,8 +4,8 @@
 package net.clementlevallois.umigon.heuristics.booleanconditions;
 
 import net.clementlevallois.umigon.heuristics.tools.LoaderOfLexiconsAndConditionalExpressions;
-import net.clementlevallois.umigon.model.BooleanCondition;
-import static net.clementlevallois.umigon.model.BooleanCondition.BooleanConditionEnum.isHashtagOrganic;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
+import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isHashtagOrganic;
 import net.clementlevallois.umigon.model.NGram;
 
 /**

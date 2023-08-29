@@ -5,8 +5,8 @@ package net.clementlevallois.umigon.heuristics.booleanconditions;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.clementlevallois.umigon.model.BooleanCondition;
-import static net.clementlevallois.umigon.model.BooleanCondition.BooleanConditionEnum.isQuestionMarkAtEndOfText;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
+import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isQuestionMarkAtEndOfText;
 import net.clementlevallois.umigon.model.NGram;
 import net.clementlevallois.umigon.model.TextFragment;
 import net.clementlevallois.umigon.model.TypeOfTextFragment;

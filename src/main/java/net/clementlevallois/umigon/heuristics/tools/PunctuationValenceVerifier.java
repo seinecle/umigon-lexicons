@@ -6,9 +6,9 @@ package net.clementlevallois.umigon.heuristics.tools;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import net.clementlevallois.umigon.model.Category;
 import net.clementlevallois.umigon.model.Punctuation;
-import net.clementlevallois.umigon.model.ResultOneHeuristics;
+import net.clementlevallois.umigon.model.classification.ResultOneHeuristics;
 
 /**
  *
@@ -28,15 +28,20 @@ public class PunctuationValenceVerifier {
     private static Set<String> punctuationSignsWithNegativeValence;
 
     public static void load() {
-        if (punctuationSignsWithPositiveValence != null && punctuationSignsWithNegativeValence != null) {
-            return;
-        }
-        punctuationSignsWithPositiveValence = new HashSet();
-        punctuationSignsWithNegativeValence = new HashSet();
-
-        try ( // we load the punctuation signs and their valence
-                InputStream inputStream = EmojisHeuristicsandResourcesLoader.class.getClassLoader().getResourceAsStream("net/clementlevallois/umigon/heuristics/lexicons/multilingual/punctuation_signs.txt")) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        BufferedReader br = null;
+        try {
+            if (punctuationSignsWithPositiveValence != null && punctuationSignsWithNegativeValence != null) {
+                return;
+            }
+            punctuationSignsWithPositiveValence = new HashSet();
+            punctuationSignsWithNegativeValence = new HashSet();
+            String PATHLOCALE = ResourcePath.returnRootResources();
+            Path pathResource = Path.of(PATHLOCALE, "net/clementlevallois/umigon/lexicons/multilingual/punctuation_signs.txt");
+            if (!Files.exists(pathResource)) {
+                System.out.println("error the file on punctuation signs not found");
+            }
+            br = Files.newBufferedReader(pathResource, StandardCharsets.UTF_8);
+            // we load the punctuation signs and their valence
             List<String> patternsOfInterestAsTSV = br.lines().collect(Collectors.toList());
             for (String patternOfInterestAsTSV : patternsOfInterestAsTSV) {
                 String[] elements = patternOfInterestAsTSV.split("\t");
@@ -54,8 +59,17 @@ public class PunctuationValenceVerifier {
                         break;
                 }
             }
+            br.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         }
     }
 

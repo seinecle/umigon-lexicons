@@ -5,14 +5,16 @@
  */
 package net.clementlevallois.umigon.heuristics.tools;
 
-import net.clementlevallois.umigon.model.LanguageSpecificLexicons;
-import net.clementlevallois.umigon.model.BooleanCondition;
-import net.clementlevallois.umigon.model.TermWithConditionalExpressions;
+import net.clementlevallois.umigon.model.classification.LanguageSpecificLexicons;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
+import net.clementlevallois.umigon.model.classification.TermWithConditionalExpressions;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -113,12 +115,15 @@ public class LoaderOfLexiconsAndConditionalExpressions {
         mapH17 = new HashMap();
         for (String fileName : fileNames) {
             try {
-                InputStream inputStream = null;
-                inputStream = getClass().getClassLoader().getResourceAsStream("net/clementlevallois/umigon/heuristics/lexicons/" + lang + "/" + fileName);
-                if (inputStream == null) {
+                String PATHLOCALE = ResourcePath.returnRootResources();
+
+                Path pathResource = Path.of(PATHLOCALE, "net/clementlevallois/umigon/lexicons/" + lang + "/" + fileName);
+                if (!Files.exists(pathResource)) {
                     continue;
                 }
-                br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+
+                br = Files.newBufferedReader(pathResource, StandardCharsets.UTF_8);
+
                 String numberPrefixInFilename = fileName.substring(0, fileName.indexOf("_"));
                 int map = Integer.parseInt(numberPrefixInFilename);
                 if (map == 0 || map == 14) {
@@ -331,8 +336,8 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                 }
                 br.close();
             } catch (IOException ex) {
-                ex.printStackTrace();
                 System.out.println("IO Exception in heuristics loader!");
+                System.out.println("probably encoding issue with file "+ fileName+" of lang " + lang);
             }
         }
         LanguageSpecificLexicons lex = new LanguageSpecificLexicons();

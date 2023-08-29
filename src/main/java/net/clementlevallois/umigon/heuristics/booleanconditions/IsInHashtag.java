@@ -6,11 +6,11 @@ package net.clementlevallois.umigon.heuristics.booleanconditions;
 import java.util.Iterator;
 import java.util.Map;
 import net.clementlevallois.umigon.heuristics.tools.LoaderOfLexiconsAndConditionalExpressions;
-import net.clementlevallois.umigon.model.BooleanCondition;
-import static net.clementlevallois.umigon.model.BooleanCondition.BooleanConditionEnum.isInHashtag;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
+import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isInHashtag;
 import net.clementlevallois.umigon.model.Hashtag;
 import net.clementlevallois.umigon.model.NGram;
-import net.clementlevallois.umigon.model.TermWithConditionalExpressions;
+import net.clementlevallois.umigon.model.classification.TermWithConditionalExpressions;
 import net.clementlevallois.umigon.model.TextFragment;
 
 /**

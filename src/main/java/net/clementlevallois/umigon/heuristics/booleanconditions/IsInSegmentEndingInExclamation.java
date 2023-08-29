@@ -5,8 +5,8 @@ package net.clementlevallois.umigon.heuristics.booleanconditions;
 
 import java.util.List;
 import net.clementlevallois.umigon.heuristics.tools.TextFragmentOps;
-import net.clementlevallois.umigon.model.BooleanCondition;
-import static net.clementlevallois.umigon.model.BooleanCondition.BooleanConditionEnum.isInSegmentEndingWithExclamation;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
+import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isInSegmentEndingWithExclamation;
 import net.clementlevallois.umigon.model.NGram;
 import net.clementlevallois.umigon.model.TextFragment;
 

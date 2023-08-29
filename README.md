@@ -1,6 +1,10 @@
 # Umigon-lexicons
 Includes lexicons with Boolean conditions and conditional expressions, and procedures to evaluate those. These are the fundamental blocks underpinning applications in sentiment analysis, emotion identification and more.
 
+## Where are the lexicons?
+
+The static text files for the lexicons have moved in a separate repo, to facilitate testing. The repo you are presently visiting includes the code logic to handle these lexicons, and in particular the rules to make decisions based on them.
+
 ## Try it
 
 These lexicons are implemented in a click-and-point, free, registration-free [web application](https://nocodefunctions.com).

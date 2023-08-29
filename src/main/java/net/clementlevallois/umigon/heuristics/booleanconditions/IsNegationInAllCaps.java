@@ -4,7 +4,7 @@
 package net.clementlevallois.umigon.heuristics.booleanconditions;
 
 import java.util.Set;
-import net.clementlevallois.umigon.model.BooleanCondition;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
 import net.clementlevallois.umigon.model.NGram;
 
 /**

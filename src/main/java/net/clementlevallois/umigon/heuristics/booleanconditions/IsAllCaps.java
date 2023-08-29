@@ -3,8 +3,8 @@
  */
 package net.clementlevallois.umigon.heuristics.booleanconditions;
 
-import net.clementlevallois.umigon.model.BooleanCondition;
-import static net.clementlevallois.umigon.model.BooleanCondition.BooleanConditionEnum.isAllCaps;
+import net.clementlevallois.umigon.model.classification.BooleanCondition;
+import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isAllCaps;
 import net.clementlevallois.umigon.model.NGram;
 
 /**
