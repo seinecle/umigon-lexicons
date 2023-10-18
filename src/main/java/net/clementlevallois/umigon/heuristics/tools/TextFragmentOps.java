@@ -19,38 +19,50 @@ public class TextFragmentOps {
     public static List<NGram> getNGramsAtRelativeOrdinalIndex(List<NGram> ngrams, NGram ngram, int relativeIndex) {
         List<NGram> ngramResults = new ArrayList();
 
-        int indexToLookUp = ngram.getIndexOrdinal() + relativeIndex;
+        int indexToLookUp = ngram.getIndexOrdinalInSentence() + relativeIndex;
+
+        // ngrams can be several terms long.
+        // the search for the terms situated AFTER an ngram should start AFTER the latest of the terms contained in the ngram
+        if (relativeIndex > 0) {
+            indexToLookUp = indexToLookUp - 1;
+        }
+
         if (indexToLookUp < 0 || indexToLookUp > ngrams.size() - 1) {
             return ngramResults;
         }
-        ListIterator<NGram> listIterator = ngrams.listIterator(ngrams.indexOf(ngram));
+        ListIterator<NGram> listIterator;
         int ngramSize = 0;
+        int ngramMaxSize = 5;
+
         if (relativeIndex < 0) {
+            listIterator = ngrams.listIterator(ngrams.indexOf(ngram));
             while (listIterator.hasPrevious()) {
                 NGram previous = listIterator.previous();
-                if (previous.getIndexOrdinal() == indexToLookUp & (previous.getIndexOrdinal() + previous.getTerms().size()) <= ngram.getIndexOrdinal()) {
+                if (previous.getIndexOrdinalInSentence() == indexToLookUp & (previous.getIndexOrdinalInSentence() + previous.getTerms().size()) <= ngram.getIndexOrdinalInSentence()) {
                     ngramResults.add(previous);
                 }
             }
         } else {
+            listIterator = ngrams.listIterator(ngrams.indexOf(ngram) + 1);
             while (listIterator.hasNext()) {
-                NGram next = listIterator.next();
-                if (next.getIndexOrdinal() == (indexToLookUp + ngramSize)) {
-                    ngramResults.add(next);
+                NGram nextNGram = listIterator.next();
+                for (int i = ngramSize; i < ngramMaxSize; i++) {
+                    if (nextNGram.getIndexOrdinalInSentence() == (indexToLookUp + i)) {
+                        ngramResults.add(nextNGram);
+                    }
                 }
-                if (next.getIndexOrdinal() > (indexToLookUp + ngramSize)) {
+                if (nextNGram.getIndexOrdinalInSentence() > (indexToLookUp + ngramSize)) {
                     break;
                 }
             }
         }
-
         return ngramResults;
     }
 
     public static List<NGram> getNGramsAtRelativeCardinalIndex(List<NGram> ngrams, NGram ngram, int relativeIndex) {
         List<NGram> ngramResults = new ArrayList();
 
-        int indexToLookUp = ngram.getIndexCardinal() + relativeIndex;
+        int indexToLookUp = ngram.getIndexCardinalInSentence() + relativeIndex;
         if (indexToLookUp < 0 || indexToLookUp > ngrams.size() - 1) {
             return ngramResults;
         }
@@ -58,24 +70,26 @@ public class TextFragmentOps {
         int ngramSize = 0;
         int ngramMaxSize = 5;
         if (relativeIndex < 0) {
-            while (listIterator.hasPrevious() && ngramSize++ < ngramMaxSize) {
+            while (listIterator.hasPrevious() && ngramSize < ngramMaxSize) {
                 NGram previous = listIterator.previous();
-                if (previous.getIndexCardinal() == (indexToLookUp + ngramSize)) {
+                if (previous.getIndexCardinalInSentence() == (indexToLookUp + ngramSize)) {
                     ngramResults.add(previous);
                 }
+                ngramSize++;
             }
         } else {
             while (listIterator.hasNext()) {
                 NGram next = listIterator.next();
-                if (next.getIndexCardinal() == (indexToLookUp + ngramSize)) {
-                    ngramResults.add(next);
+                for (int i = ngramSize; i < ngramMaxSize; i++) {
+                    if (next.getIndexCardinalInSentence() == (indexToLookUp + i)) {
+                        ngramResults.add(next);
+                    }
                 }
-                if (next.getIndexCardinal() > (indexToLookUp + ngramSize)) {
+                if (next.getIndexCardinalInSentence() > (indexToLookUp + ngramSize)) {
                     break;
                 }
             }
         }
-
         return ngramResults;
     }
 
@@ -85,9 +99,9 @@ public class TextFragmentOps {
 
     public static List<TextFragment> getTextFragmentsAfterAnNgram(List<TextFragment> textFragments, NGram ngram) {
         List<TextFragment> textFragmentsAfterNGram = new ArrayList();
-        int indexCardinalNGram = ngram.getIndexCardinal();
+        int indexCardinalNGram = ngram.getIndexCardinalInSentence();
         for (TextFragment textFragment : textFragments) {
-            if (textFragment.getIndexCardinal() > indexCardinalNGram) {
+            if (textFragment.getIndexCardinalInSentence() > indexCardinalNGram) {
                 textFragmentsAfterNGram.add(textFragment);
             }
         }
@@ -97,7 +111,7 @@ public class TextFragmentOps {
     public static List<NGram> getNGramsBeforeAnOrdinalIndex(List<NGram> ngrams, NGram ngram) {
         List<NGram> results = new ArrayList();
         for (NGram ngramLoop : ngrams) {
-            if (ngramLoop.getIndexOrdinal() < ngram.getIndexOrdinal()) {
+            if (ngramLoop.getIndexOrdinalInSentence() < ngram.getIndexOrdinalInSentence()) {
                 results.add(ngramLoop);
             }
         }
@@ -108,8 +122,7 @@ public class TextFragmentOps {
         List<NGram> results = new ArrayList();
         for (NGram ngram : ngrams) {
             if (collection.contains(ngram.getCleanedAndStrippedNgramIfCondition(stripped).toLowerCase())
-                    ||
-                    collection.contains(ngram.getCleanedAndStrippedNgramIfCondition(!stripped).toLowerCase())) {
+                    || collection.contains(ngram.getCleanedAndStrippedNgramIfCondition(!stripped).toLowerCase())) {
                 results.add(ngram);
             }
         }

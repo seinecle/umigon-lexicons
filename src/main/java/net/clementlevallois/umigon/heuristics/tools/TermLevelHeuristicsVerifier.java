@@ -26,7 +26,11 @@ import net.clementlevallois.umigon.heuristics.booleanconditions.IsHashtagPositiv
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsHashtagStart;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFollowedByANegativeOpinion;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFollowedByAPositiveOpinion;
+import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFollowedByNegativePriorAssociation;
+import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFollowedByPositivePriorAssociation;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyPrecededByPositive;
+import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyPrecededByStrongWord;
+import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyPrecededBySubjectiveTerm;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsInASentenceLikeFragmentWithOneOfTheseSpecificTerms;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsInHashtag;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsInSegmentEndingInExclamation;
@@ -42,6 +46,7 @@ import net.clementlevallois.umigon.model.NGram;
 import net.clementlevallois.umigon.model.classification.ResultOneHeuristics;
 import net.clementlevallois.umigon.model.SentenceLike;
 import net.clementlevallois.umigon.model.TextFragment;
+import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isImmediatelyPrecededByStrongWord;
 
 /*
  Copyright 2008-2013 Clement Levallois
@@ -255,8 +260,23 @@ public class TermLevelHeuristicsVerifier {
                     case isFirstLetterCapitalized:
                         booleanCondition = IsFirstLetterCapitalized.check(ngramParam.getCleanedNgram());
                         break;
+
+                    case isImmediatelyFollowedByPositivePriorAssociation:
+                        booleanCondition = IsImmediatelyFollowedByPositivePriorAssociation.check(stripped, nGramsInSentence, ngramParam, lexiconsAndConditionalExpressions);
+                        break;
+
+                    case isImmediatelyFollowedByNegativePriorAssociation:
+                        booleanCondition = IsImmediatelyFollowedByNegativePriorAssociation.check(stripped, nGramsInSentence, ngramParam, lexiconsAndConditionalExpressions);
+                        break;
+
+                    case isImmediatelyPrecededByStrongWord:
+                        booleanCondition = IsImmediatelyPrecededByStrongWord.check(stripped, nGramsInSentence, ngramParam, lexiconsAndConditionalExpressions);
+                        break;
+
+                    case isImmediatelyPrecededBySubjectiveTerm:
+                        booleanCondition = IsImmediatelyPrecededBySubjectiveTerm.check(stripped, nGramsInSentence, ngramParam, lexiconsAndConditionalExpressions);
+                        break;
                 }
-//                        booleanCondition = IsQuestionMarkAtEndOfText.check(text);
 
                 boolean booleanOutcomeAfterPossibleInversion;
                 if (opposite) {

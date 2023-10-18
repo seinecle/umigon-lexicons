@@ -48,7 +48,7 @@ public class EmojisHeuristicsandResourcesLoader {
         setHyperSatisfactionEmojis = new HashSet();
 
         String fileSeparator = FileSystems.getDefault().getSeparator();
-        String PATHLOCALE = ResourcePath.returnRootResources() + "net" + fileSeparator + "clementlevallois" + fileSeparator + "umigon" + fileSeparator + "lexicons" + fileSeparator + "multilingual" + fileSeparator + "emojis.txt";
+        String PATHLOCALE = ResourcePath.returnRootResources() + "src" + fileSeparator + "main" + fileSeparator + "resources" + fileSeparator + "net" + fileSeparator + "clementlevallois" + fileSeparator + "umigon" + fileSeparator + "lexicons" + fileSeparator + "multilingual" + fileSeparator + "emojis.txt";
         BufferedReader br = Files.newBufferedReader(Path.of(PATHLOCALE), StandardCharsets.UTF_8);
 
         List<String> patternsOfInterestAsTSV = br.lines().collect(Collectors.toList());

@@ -36,7 +36,7 @@ public class PunctuationValenceVerifier {
             punctuationSignsWithPositiveValence = new HashSet();
             punctuationSignsWithNegativeValence = new HashSet();
             String PATHLOCALE = ResourcePath.returnRootResources();
-            Path pathResource = Path.of(PATHLOCALE, "net/clementlevallois/umigon/lexicons/multilingual/punctuation_signs.txt");
+            Path pathResource = Path.of(PATHLOCALE, "src/main/resources/net/clementlevallois/umigon/lexicons/multilingual/punctuation_signs.txt");
             if (!Files.exists(pathResource)) {
                 System.out.println("error the file on punctuation signs not found");
             }
@@ -46,7 +46,7 @@ public class PunctuationValenceVerifier {
             for (String patternOfInterestAsTSV : patternsOfInterestAsTSV) {
                 String[] elements = patternOfInterestAsTSV.split("\t");
                 if (elements.length < 2) {
-                    System.out.println("error in an punctuatiin line, too short:");
+                    System.out.println("error in an punctuation line, too short:");
                     System.out.println(patternOfInterestAsTSV);
                 }
                 switch (elements[1]) {

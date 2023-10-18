@@ -10,8 +10,6 @@ import net.clementlevallois.umigon.model.classification.BooleanCondition;
 import net.clementlevallois.umigon.model.classification.TermWithConditionalExpressions;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -90,6 +88,8 @@ public class LoaderOfLexiconsAndConditionalExpressions {
         fileNames.add("14_false positive opinions.txt");
         fileNames.add("12_time indications.txt");
         fileNames.add("11_hints difficulty.txt");
+        fileNames.add("18_positive_prior_assocations.txt");
+        fileNames.add("19_negative_prior_assocations.txt");
         lexiconsWithoutTheirConditionalExpressions = new HashSet();
         setNegations = new HashSet();
         setTimeTokens = new HashSet();
@@ -117,7 +117,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
             try {
                 String PATHLOCALE = ResourcePath.returnRootResources();
 
-                Path pathResource = Path.of(PATHLOCALE, "net/clementlevallois/umigon/lexicons/" + lang + "/" + fileName);
+                Path pathResource = Path.of(PATHLOCALE, "src/main/resources/net/clementlevallois/umigon/lexicons/" + lang + "/" + fileName);
                 if (!Files.exists(pathResource)) {
                     continue;
                 }
@@ -163,12 +163,9 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                     field3 = (fields.length < 4) ? "" : fields[3].trim();
 
                     term = field0;
-//                    if (term.equals("horrible")) {
-//                        System.out.println("stop");
-//                    }
 
                     featureString = field1;
-                    if (map == 3 || map == 6 || map == 10 || map == 11 || map == 12 || map == 14 || map == 15 || map == 16) {
+                    if (map == 3 || map == 6 || map == 10 || map == 11 || map == 12 || map == 14 || map == 15 || map == 16 || map == 18 || map == 19) {
                         //negations
                         if (map == 10) {
                             setNegations.add(term);
@@ -238,6 +235,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                         continue;
                     }
                     rule = field2;
+
                     hashtagRelevant = field3;
                     //parse the "feature" field to disentangle the feature from the parameters
                     //this parsing rule will be extended to allow for multiple features
@@ -245,6 +243,11 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                         System.out.println("error reading lexicon line: \"" + string + "\" in language " + lang);
                         System.out.println("item in the lexicon not imported");
                         continue;
+                    }
+                    if (featureString.contains("12") | featureString.contains("11") | featureString.contains("10")) {
+                        System.out.println("error in feature, probably a missing tab:");
+                        System.out.println(string);
+                        System.out.println(Arrays.toString(fields));
                     }
                     featuresArray = featureString.split("\\+\\+\\+");
                     featuresList = Arrays.asList(featuresArray);
@@ -337,7 +340,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                 br.close();
             } catch (IOException ex) {
                 System.out.println("IO Exception in heuristics loader!");
-                System.out.println("probably encoding issue with file "+ fileName+" of lang " + lang);
+                System.out.println("probably encoding issue with file " + fileName + " of lang " + lang);
             }
         }
         LanguageSpecificLexicons lex = new LanguageSpecificLexicons();
@@ -364,6 +367,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
         lex.setSetStrong(setStrong);
         lex.setSetNegations(setNegations);
         lex.setSetTimeTokens(setTimeTokens);
+        lex.setSetSubjective(setSubjective);
         lex.setSetSubjective(setSubjective);
         multilingualLexicons.put(lang, lex);
     }
