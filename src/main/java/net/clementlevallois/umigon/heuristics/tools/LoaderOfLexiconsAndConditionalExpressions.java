@@ -54,7 +54,8 @@ public class LoaderOfLexiconsAndConditionalExpressions {
     private Set<String> setPositivePriorAssociations;
     private Set<String> setNegativePriorAssociations;
     private Set<String> setHashTags;
-    private Set<String> setModerators;
+    private Set<String> setModeratorsForward;
+    private Set<String> setModeratorsBackward;
     private Set<String> setStrong;
     private Set<String> setFalsePositiveOpinions;
     private Set<String> setIronicallyPositive;
@@ -90,6 +91,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
         fileNames.add("11_hints difficulty.txt");
         fileNames.add("18_positive_prior_assocations.txt");
         fileNames.add("19_negative_prior_assocations.txt");
+        fileNames.add("20_moderators_backward.txt");
         lexiconsWithoutTheirConditionalExpressions = new HashSet();
         setNegations = new HashSet();
         setTimeTokens = new HashSet();
@@ -97,7 +99,8 @@ public class LoaderOfLexiconsAndConditionalExpressions {
         setIronicallyPositive = new HashSet();
         setPositivePriorAssociations = new HashSet();
         setNegativePriorAssociations = new HashSet();
-        setModerators = new HashSet();
+        setModeratorsForward = new HashSet();
+        setModeratorsBackward = new HashSet();
         setStrong = new HashSet();
         setSubjective = new HashSet();
         mapH1 = new HashMap();
@@ -165,7 +168,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                     term = field0;
 
                     featureString = field1;
-                    if (map == 3 || map == 6 || map == 10 || map == 11 || map == 12 || map == 14 || map == 15 || map == 16 || map == 18 || map == 19) {
+                    if (map == 3 || map == 6 || map == 10 || map == 11 || map == 12 || map == 14 || map == 15 || map == 16 || map == 18 || map == 19 || map == 20) {
                         //negations
                         if (map == 10) {
                             setNegations.add(term);
@@ -223,9 +226,15 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                             setIronicallyPositive.add(term);
                             continue;
                         }
-                        //set of moderators
+                        //set of moderators forward
                         if (map == 16) {
-                            setModerators.add(term);
+                            setModeratorsForward.add(term);
+                            continue;
+                        }
+
+                        //set of moderators backward
+                        if (map == 20) {
+                            setModeratorsBackward.add(term);
                             continue;
                         }
 
@@ -363,7 +372,8 @@ public class LoaderOfLexiconsAndConditionalExpressions {
         lex.setSetHashTags(setHashTags);
         lex.setSetFalsePositiveOpinions(setFalsePositiveOpinions);
         lex.setSetIronicallyPositive(setIronicallyPositive);
-        lex.setSetModerators(setModerators);
+        lex.setSetModeratorsForward(setModeratorsForward);
+        lex.setSetModeratorsBackward(setModeratorsBackward);
         lex.setSetStrong(setStrong);
         lex.setSetNegations(setNegations);
         lex.setSetTimeTokens(setTimeTokens);
@@ -400,8 +410,12 @@ public class LoaderOfLexiconsAndConditionalExpressions {
         return multilingualLexicons.get(lang).getSetNegations();
     }
 
-    public Set<String> getSetModerators() {
-        return multilingualLexicons.get(lang).getSetModerators();
+    public Set<String> getSetModeratorsForward() {
+        return multilingualLexicons.get(lang).getSetModeratorsForward();
+    }
+
+    public Set<String> getSetModeratorsBackward() {
+        return multilingualLexicons.get(lang).getSetModeratorsBackward();
     }
 
     public Set<String> getSetStrong() {
@@ -431,5 +445,4 @@ public class LoaderOfLexiconsAndConditionalExpressions {
     public Set<String> getSetNegativePriorAssociations() {
         return setNegativePriorAssociations;
     }
-
 }
