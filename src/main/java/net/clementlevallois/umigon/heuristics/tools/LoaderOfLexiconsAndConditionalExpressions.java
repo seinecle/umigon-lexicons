@@ -30,8 +30,6 @@ import net.clementlevallois.utils.TextCleaningOps;
 public class LoaderOfLexiconsAndConditionalExpressions {
 
     private final String lang;
-    private BufferedReader br;
-    private String string;
     private TermWithConditionalExpressions lexiconsAndConditionalExpressions;
     private Set<String> lexiconsWithoutTheirConditionalExpressions;
     private Map<String, TermWithConditionalExpressions> mapH1;
@@ -125,14 +123,13 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                     continue;
                 }
 
-                br = Files.newBufferedReader(pathResource, StandardCharsets.UTF_8);
+                List<String> lines = Files.readAllLines(pathResource, StandardCharsets.UTF_8);
 
                 String numberPrefixInFilename = fileName.substring(0, fileName.indexOf("_"));
                 int map = Integer.parseInt(numberPrefixInFilename);
                 if (map == 0 || map == 14) {
                     continue;
                 }
-
                 String term = null;
                 String featureString;
                 String rule = null;
@@ -149,15 +146,16 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                 //mapFeatures:
                 //key: a feature
                 //value: a set of parameters for the given feature
-                while ((string = br.readLine()) != null) {
-                    fields = string.split("\t");
+                for (String line : lines) {
+                    fields = line.split("\t");
                     if (fields.length == 0) {
                         System.out.println("empty line or something in file " + fileName + "for lang" + lang);
                         continue;
                     }
-                    if (!lang.equals("zh")) {
-                        field0 = TextCleaningOps.flattenToAsciiAndRemoveApostrophs(fields[0].trim());
-                    }
+//                    if (!lang.equals("zh")) {
+//                        field0 = TextCleaningOps.flattenToAsciiAndRemoveApostrophs(fields[0].trim());
+//                    }
+                    field0 = fields[0].trim();
                     if (field0.isEmpty()) {
                         continue;
                     }
@@ -239,7 +237,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                         }
 
                         System.out.println("error:");
-                        System.out.println(string);
+                        System.out.println(line);
                         System.out.println(Arrays.toString(fields));
                         continue;
                     }
@@ -249,13 +247,13 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                     //parse the "feature" field to disentangle the feature from the parameters
                     //this parsing rule will be extended to allow for multiple features
                     if (featureString == null) {
-                        System.out.println("error reading lexicon line: \"" + string + "\" in language " + lang);
+                        System.out.println("error reading lexicon line: \"" + line + "\" in language " + lang);
                         System.out.println("item in the lexicon not imported");
                         continue;
                     }
                     if (featureString.contains("12") | featureString.contains("11") | featureString.contains("10")) {
                         System.out.println("error in feature, probably a missing tab:");
-                        System.out.println(string);
+                        System.out.println(line);
                         System.out.println(Arrays.toString(fields));
                     }
                     featuresArray = featureString.split("\\+\\+\\+");
@@ -291,7 +289,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                         }
                         if (booleanExpression.getBooleanConditionEnum() == null) {
                             System.out.println("problem with conditional expression for line: ");
-                            System.out.println(string);
+                            System.out.println(line);
                         }
                         lexiconsAndConditionalExpressions.addFeature(booleanExpression);
                     }
@@ -346,7 +344,6 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                         mapH13.put(term.toLowerCase(), lexiconsAndConditionalExpressions);
                     }
                 }
-                br.close();
             } catch (IOException ex) {
                 System.out.println("IO Exception in heuristics loader!");
                 System.out.println("probably encoding issue with file " + fileName + " of lang " + lang);

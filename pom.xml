@@ -31,15 +31,19 @@
         <dependency>
             <groupId>net.clementlevallois.functions</groupId>
             <artifactId>umigon-model</artifactId>
-            <version>0.14</version>
+            <version>0.15</version>
         </dependency>
         <dependency>
             <groupId>net.clementlevallois.functions</groupId>
             <artifactId>umigon-model-classification</artifactId>
             <version>0.10</version>
         </dependency>
+        <dependency>
+            <groupId>net.fellbaum</groupId>
+            <artifactId>jemoji</artifactId>
+            <version>1.3.0</version>
+        </dependency>        
     </dependencies>
-
     <description>the data structure for text operations by the tools of umigon-family</description>
     <url>https://github.com/seinecle/umigon-lexicons</url>
     <inceptionYear>2013</inceptionYear>
