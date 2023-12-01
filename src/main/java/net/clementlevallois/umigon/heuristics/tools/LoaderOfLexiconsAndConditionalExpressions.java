@@ -8,7 +8,6 @@ package net.clementlevallois.umigon.heuristics.tools;
 import net.clementlevallois.umigon.model.classification.LanguageSpecificLexicons;
 import net.clementlevallois.umigon.model.classification.BooleanCondition;
 import net.clementlevallois.umigon.model.classification.TermWithConditionalExpressions;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -21,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import net.clementlevallois.utils.TextCleaningOps;
 
 /**
  *
@@ -131,16 +129,13 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                     continue;
                 }
                 String term = null;
-                String featureString;
-                String rule = null;
                 String[] fields;
                 String[] parametersArray;
-                String[] featuresArray;
-                List<String> featuresList;
-                Iterator<String> featuresListIterator;
-                String field0 = "";
-                String field1;
-                String field2;
+                String[] arrayOfBooleanConditioons;
+                List<String> listOfBooleanConditions;
+                Iterator<String> booleanConditionsIterator;
+                String booleanConditionsAttachedToTheTerm;
+                String booleanExpressionForEvaluation;
                 String field3;
                 String hashtagRelevant;
                 //mapFeatures:
@@ -155,17 +150,16 @@ public class LoaderOfLexiconsAndConditionalExpressions {
 //                    if (!lang.equals("zh")) {
 //                        field0 = TextCleaningOps.flattenToAsciiAndRemoveApostrophs(fields[0].trim());
 //                    }
-                    field0 = fields[0].trim();
-                    if (field0.isEmpty()) {
+                    if (fields[0] == null || fields[0].isEmpty()) {
                         continue;
                     }
-                    field1 = (fields.length < 2) ? null : fields[1];
-                    field2 = (fields.length < 3) ? "" : fields[2].trim();
-                    field3 = (fields.length < 4) ? "" : fields[3].trim();
-
-                    term = field0;
-
-                    featureString = field1;
+//                    if (fields[0].equals("best")){
+//                        System.out.println("stop");
+//                    }
+                    term = fields[0].trim();
+                    booleanConditionsAttachedToTheTerm = (fields.length < 2) ? null : fields[1];
+                    booleanExpressionForEvaluation = (fields.length < 3) ? "" : fields[2].trim();
+                    hashtagRelevant = (fields.length < 4) ? "" : fields[3].trim();
                     if (map == 3 || map == 6 || map == 10 || map == 11 || map == 12 || map == 14 || map == 15 || map == 16 || map == 18 || map == 19 || map == 20) {
                         //negations
                         if (map == 10) {
@@ -241,36 +235,34 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                         System.out.println(Arrays.toString(fields));
                         continue;
                     }
-                    rule = field2;
 
-                    hashtagRelevant = field3;
                     //parse the "feature" field to disentangle the feature from the parameters
                     //this parsing rule will be extended to allow for multiple features
-                    if (featureString == null) {
+                    if (booleanConditionsAttachedToTheTerm == null) {
                         System.out.println("error reading lexicon line: \"" + line + "\" in language " + lang);
                         System.out.println("item in the lexicon not imported");
                         continue;
                     }
-                    if (featureString.contains("12") | featureString.contains("11") | featureString.contains("10")) {
-                        System.out.println("error in feature, probably a missing tab:");
+                    if (booleanConditionsAttachedToTheTerm.contains("12") | booleanConditionsAttachedToTheTerm.contains("11") | booleanConditionsAttachedToTheTerm.contains(":10")| booleanConditionsAttachedToTheTerm.contains("10}")) {
+                        System.out.println("probable error in list of boolean conditions because we detected 10, 11 or 12 in it. Probably a missing tab:");
                         System.out.println(line);
                         System.out.println(Arrays.toString(fields));
                     }
-                    featuresArray = featureString.split("\\+\\+\\+");
-                    featuresList = Arrays.asList(featuresArray);
-                    featuresListIterator = featuresList.iterator();
+                    arrayOfBooleanConditioons = booleanConditionsAttachedToTheTerm.split("\\+\\+\\+");
+                    listOfBooleanConditions = Arrays.asList(arrayOfBooleanConditioons);
+                    booleanConditionsIterator = listOfBooleanConditions.iterator();
                     lexiconsAndConditionalExpressions = new TermWithConditionalExpressions();
-                    while (featuresListIterator.hasNext()) {
+                    while (booleanConditionsIterator.hasNext()) {
                         BooleanCondition booleanExpression = new BooleanCondition();
                         String condition;
 
-                        featureString = featuresListIterator.next();
-                        if (featureString == null || featureString.isEmpty() || featureString.equals("null")) {
+                        String oneBooleanCondition = booleanConditionsIterator.next();
+                        if (oneBooleanCondition == null || oneBooleanCondition.isEmpty() || oneBooleanCondition.equals("null")) {
                             continue;
                         }
-                        if (featureString.contains("///")) {
-                            parametersArray = featureString.substring(featureString.indexOf("///") + 3, featureString.length()).split("\\|");
-                            condition = featureString.substring(0, featureString.indexOf("///"));
+                        if (oneBooleanCondition.contains("///")) {
+                            parametersArray = oneBooleanCondition.substring(oneBooleanCondition.indexOf("///") + 3, oneBooleanCondition.length()).split("\\|");
+                            condition = oneBooleanCondition.substring(0, oneBooleanCondition.indexOf("///"));
                             if (condition != null & !condition.isEmpty()) {
                                 if (condition.startsWith("!")) {
                                     booleanExpression.setCondition(condition.substring(1), true);
@@ -280,11 +272,11 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                                 booleanExpression.setAssociatedKeywords(new HashSet(Arrays.asList(parametersArray)));
                             }
                         } else {
-                            if (featureString.startsWith("!")) {
-                                booleanExpression.setCondition(featureString.substring(1), true);
+                            if (oneBooleanCondition.startsWith("!")) {
+                                booleanExpression.setCondition(oneBooleanCondition.substring(1), true);
                                 booleanExpression.setFlipped(Boolean.TRUE);
                             } else {
-                                booleanExpression.setCondition(featureString, false);
+                                booleanExpression.setCondition(oneBooleanCondition, false);
                             }
                         }
                         if (booleanExpression.getBooleanConditionEnum() == null) {
@@ -296,7 +288,7 @@ public class LoaderOfLexiconsAndConditionalExpressions {
                     if (hashtagRelevant.equalsIgnoreCase("x")) {
                         lexiconsAndConditionalExpressions.setHashtagRelevant(false);
                     }
-                    lexiconsAndConditionalExpressions.generateNewHeuristic(term, rule);
+                    lexiconsAndConditionalExpressions.generateNewHeuristic(term, booleanExpressionForEvaluation);
 
                     lexiconsWithoutTheirConditionalExpressions.add(term);
                     //positive
