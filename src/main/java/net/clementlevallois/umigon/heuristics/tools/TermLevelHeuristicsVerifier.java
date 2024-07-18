@@ -28,6 +28,7 @@ import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFol
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFollowedByAPositiveOpinion;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFollowedByNegativePriorAssociation;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFollowedByPositivePriorAssociation;
+import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyFollowedByStrongWord;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyPrecededByPositive;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyPrecededByStrongWord;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsImmediatelyPrecededBySubjectiveTerm;
@@ -40,12 +41,14 @@ import net.clementlevallois.umigon.heuristics.booleanconditions.IsPrecededByPosi
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsPrecededBySpecificTerm;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsPrecededByStrongWord;
 import net.clementlevallois.umigon.heuristics.booleanconditions.IsPrecededBySubjectiveTerm;
+import net.clementlevallois.umigon.heuristics.booleanconditions.IsStartOfSegment;
 import net.clementlevallois.umigon.model.Category;
 import net.clementlevallois.umigon.model.Category.CategoryEnum;
 import net.clementlevallois.umigon.model.NGram;
 import net.clementlevallois.umigon.model.classification.ResultOneHeuristics;
 import net.clementlevallois.umigon.model.SentenceLike;
 import net.clementlevallois.umigon.model.TextFragment;
+import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isImmediatelyFollowedByStrongWord;
 import static net.clementlevallois.umigon.model.classification.BooleanCondition.BooleanConditionEnum.isImmediatelyPrecededByStrongWord;
 
 /*
@@ -170,6 +173,10 @@ public class TermLevelHeuristicsVerifier {
                         booleanCondition = IsImmediatelyFollowedBySpecificTerm.check(stripped, nGramsInSentence, ngramParam, associatedKeywords);
                         break;
 
+                    case isImmediatelyFollowedByStrongWord:
+                        booleanCondition = IsImmediatelyFollowedByStrongWord.check(stripped, nGramsInSentence, ngramParam, lexiconsAndConditionalExpressions);
+                        break;
+
                     case isImmediatelyFollowedByAnOpinion:
                         booleanCondition = IsImmediatelyFollowedByAnOpinion.check(stripped, nGramsInSentence, ngramParam, lexiconsAndConditionalExpressions);
                         break;
@@ -275,6 +282,10 @@ public class TermLevelHeuristicsVerifier {
 
                     case isImmediatelyPrecededBySubjectiveTerm:
                         booleanCondition = IsImmediatelyPrecededBySubjectiveTerm.check(stripped, nGramsInSentence, ngramParam, lexiconsAndConditionalExpressions);
+                        break;
+
+                    case isStartOfSegment:
+                        booleanCondition = IsStartOfSegment.check(nGramsInSentence, ngramParam);
                         break;
                 }
 
